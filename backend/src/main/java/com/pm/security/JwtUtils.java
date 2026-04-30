@@ -1,7 +1,6 @@
 package com.pm.security;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,9 +62,8 @@ public class JwtUtils {
         return false;
     }
 
+    // ✅ FIXED - removed double Base64 encoding
     private Key key() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(
-            java.util.Base64.getEncoder().encodeToString(jwtSecret.getBytes())
-        ));
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 }
